@@ -14,15 +14,15 @@ public abstract class User {
     public abstract boolean showMenu();
 
     public void setName(String value) {
-        this.name = value;
+        name = value;
     }
 
     public void setPassword(String value) {
-        this.password = password;
+        password = value;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(String value) {
+        role = value;
     }
 
     public String getName() {
