@@ -8,34 +8,30 @@ public class Operator extends User {
     }
 
     public void showMenu() {
-        String menu_str = """
-                ========档案录入员========
-                1. 上传文件
-                2. 下载文件
-                3. 文件列表
-                4. 修改密码（本账号）
-                5. 退出
-                选择操作:\040""";
-        System.out.print(menu_str);
-        Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
-        switch (choice) {
-            case 1:
-                uploadFile();
-                break;
-            case 2:
-                downloadFile();
-                break;
-            case 3:
-                showFileList();
-                break;
-            case 4:
-                changeSelfPassword();
-                break;
-            case 5:
-                exitSystem();
-            default:
-                System.out.println("选项错误");
+        while (true) {
+            String menu_str = """
+                    ========档案录入员========
+                    1. 上传文件
+                    2. 下载文件
+                    3. 文件列表
+                    4. 修改密码（本账号）
+                    5. 注销登录
+                    6. 退出系统
+                    选择操作:\040""";
+            System.out.print(menu_str);
+            Scanner sc = new Scanner(System.in);
+            int choice = sc.nextInt();
+            switch (choice) {
+                case 1 -> uploadFile();
+                case 2 -> downloadFile();
+                case 3 -> showFileList();
+                case 4 -> changeSelfPassword();
+                case 5 -> {
+                    return;
+                }
+                case 6 -> exitSystem();
+                default -> System.out.println("选项错误");
+            }
         }
     }
 
