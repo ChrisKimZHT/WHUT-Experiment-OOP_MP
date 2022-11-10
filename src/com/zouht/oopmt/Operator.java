@@ -7,7 +7,7 @@ public class Operator extends User {
         super(name, password, role);
     }
 
-    public boolean showMenu() {
+    public void showMenu() {
         String menu_str = """
                 ========档案录入员========
                 1. 上传文件
@@ -33,11 +33,10 @@ public class Operator extends User {
                 changeSelfPassword();
                 break;
             case 5:
-                return false;
+                exitSystem();
             default:
                 System.out.println("选项错误");
         }
-        return true;
     }
 
     public void uploadFile() {

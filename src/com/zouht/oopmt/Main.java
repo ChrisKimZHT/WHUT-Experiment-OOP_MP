@@ -24,8 +24,7 @@ public class Main {
                 return;
             }
             while (true) {
-                if (!user.showMenu())
-                    break;
+                user.showMenu();
             }
 
         }

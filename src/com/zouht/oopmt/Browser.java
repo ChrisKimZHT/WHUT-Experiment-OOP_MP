@@ -7,7 +7,7 @@ public class Browser extends User {
         super(name, password, role);
     }
 
-    public boolean showMenu() {
+    public void showMenu() {
         String menu_str = """
                 ========档案浏览员========
                 1. 下载文件
@@ -29,10 +29,9 @@ public class Browser extends User {
                 changeSelfPassword();
                 break;
             case 4:
-                return false;
+                exitSystem();
             default:
                 System.out.println("选项错误");
         }
-        return true;
     }
 }

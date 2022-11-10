@@ -8,7 +8,7 @@ public class Admin extends User {
         super(name, password, role);
     }
 
-    public boolean showMenu() {
+    public void showMenu() {
         String menu_str = """
                 ========档案管理员========
                 1. 新增用户
@@ -46,11 +46,10 @@ public class Admin extends User {
                 changeSelfPassword();
                 break;
             case 8:
-                return false;
+                exitSystem();
             default:
                 System.out.println("选项错误");
         }
-        return true;
     }
 
     public void changeUserInfo() {

@@ -11,7 +11,7 @@ public abstract class User {
         this.role = role;
     }
 
-    public abstract boolean showMenu();
+    public abstract void showMenu();
 
     public void setName(String value) {
         name = value;
@@ -59,6 +59,11 @@ public abstract class User {
                 WIP
                 """;
         System.out.println(menu_str);
+    }
+
+    public void exitSystem() {
+        System.out.println("系统退出");
+        System.exit(0);
     }
 }
 
