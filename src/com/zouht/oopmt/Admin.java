@@ -1,6 +1,7 @@
 package com.zouht.oopmt;
 
 import java.security.PublicKey;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Admin extends User {
@@ -24,7 +25,14 @@ public class Admin extends User {
                     选择操作:\040""";
             System.out.print(menu_str);
             Scanner sc = new Scanner(System.in);
-            int choice = sc.nextInt();
+            int choice;
+            // 选项合法性检查
+            try {
+                choice = sc.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("选项错误，请重试");
+                continue;
+            }
             switch (choice) {
                 case 1 -> addUser();
                 case 2 -> deleteUser();
@@ -37,7 +45,7 @@ public class Admin extends User {
                     return;
                 }
                 case 9 -> exitSystem();
-                default -> System.out.println("选项错误");
+                default -> System.out.println("选项错误，请重试");
             }
         }
     }

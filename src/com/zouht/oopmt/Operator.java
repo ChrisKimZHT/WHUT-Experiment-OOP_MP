@@ -1,5 +1,6 @@
 package com.zouht.oopmt;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Operator extends User {
@@ -20,7 +21,14 @@ public class Operator extends User {
                     选择操作:\040""";
             System.out.print(menu_str);
             Scanner sc = new Scanner(System.in);
-            int choice = sc.nextInt();
+            int choice;
+            // 选项合法性检查
+            try {
+                choice = sc.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("选项错误，请重试");
+                continue;
+            }
             switch (choice) {
                 case 1 -> uploadFile();
                 case 2 -> downloadFile();
@@ -30,7 +38,7 @@ public class Operator extends User {
                     return;
                 }
                 case 6 -> exitSystem();
-                default -> System.out.println("选项错误");
+                default -> System.out.println("选项错误，请重试");
             }
         }
     }
