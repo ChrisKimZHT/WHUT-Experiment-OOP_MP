@@ -1,5 +1,8 @@
 package com.zouht.oopmt;
 
+import java.util.Objects;
+import java.util.Scanner;
+
 public abstract class User {
     private String name;
     private String password;
@@ -54,11 +57,20 @@ public abstract class User {
     }
 
     public void changeSelfPassword() {
-        String menu_str = """
-                ========修改密码========
-                WIP
-                """;
+        String menu_str = "========修改密码========";
         System.out.println(menu_str);
+        String new_password, confirm_password;
+        System.out.print("输入新密码: ");
+        Scanner sc = new Scanner(System.in);
+        new_password = sc.next();
+        System.out.print("确认新密码: ");
+        confirm_password = sc.next();
+        if (Objects.equals(new_password, confirm_password)) {
+            DataProcessing.updateUser(this.name, new_password, this.role);
+            System.out.println("密码修改完成，注销登录后将生效");
+        } else {
+            System.out.println("两次密码不一致，请重试");
+        }
     }
 
     public void exitSystem() {
