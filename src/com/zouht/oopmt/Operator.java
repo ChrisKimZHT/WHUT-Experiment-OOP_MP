@@ -15,8 +15,8 @@ public class Operator extends User {
                 3. 文件列表
                 4. 修改密码（本账号）
                 5. 退出
-                选择操作:""";
-        System.out.println(menu_str);
+                选择操作:\040""";
+        System.out.print(menu_str);
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
         switch (choice) {

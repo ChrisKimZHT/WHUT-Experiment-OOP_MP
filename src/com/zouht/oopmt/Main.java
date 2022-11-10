@@ -8,15 +8,15 @@ public class Main {
                 ========欢迎进入档案系统========
                 1. 登录
                 2. 退出
-                选择操作:""";
-        System.out.println(menu_str);
+                选择操作:\040""";
+        System.out.print(menu_str);
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
         if (choice == 1) {
             String name, password;
-            System.out.println("输入用户名: ");
+            System.out.print("输入用户名: ");
             name = sc.next();
-            System.out.println("输入密码: ");
+            System.out.print("输入密码: ");
             password = sc.next();
             User user = DataProcessing.checkPassword(name, password);
             if (user == null) {
@@ -26,7 +26,6 @@ public class Main {
             while (true) {
                 user.showMenu();
             }
-
         }
     }
 }

@@ -19,8 +19,8 @@ public class Admin extends User {
                 6. 文件列表
                 7. 修改密码（本账号）
                 8. 退出
-                选择操作:""";
-        System.out.println(menu_str);
+                选择操作:\040""";
+        System.out.print(menu_str);
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
         switch (choice) {
