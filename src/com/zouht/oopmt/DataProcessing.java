@@ -13,10 +13,7 @@ public class DataProcessing {
         users.put("kate", new Admin("kate", "123", "admin"));
     }
 
-    // 增加用户
-    public static boolean addUser(String name, String password, String role) {
-        if (users.containsKey(name))
-            return false;
+    private static User constructUser(String name, String password, String role) {
         User user;
         if (role.equalsIgnoreCase("admin")) {
             user = new Admin(name, password, role);
@@ -25,8 +22,18 @@ public class DataProcessing {
         } else if (role.equalsIgnoreCase("browser")) {
             user = new Browser(name, password, role);
         } else {
-            return false;
+            return null;
         }
+        return user;
+    }
+
+    // 增加用户
+    public static boolean addUser(String name, String password, String role) {
+        if (users.containsKey(name))
+            return false;
+        User user = constructUser(name, password, role); // 构造一个具体的用户类
+        if (user == null)
+            return false;
         users.put(name, user);
         return true;
     }
@@ -44,16 +51,9 @@ public class DataProcessing {
     public static boolean updateUser(String name, String password, String role) {
         if (!users.containsKey(name))
             return false;
-        User user;
-        if (role.equalsIgnoreCase("admin")) {
-            user = new Admin(name, password, role);
-        } else if (role.equalsIgnoreCase("operator")) {
-            user = new Operator(name, password, role);
-        } else if (role.equalsIgnoreCase("browser")) {
-            user = new Browser(name, password, role);
-        } else {
+        User user = constructUser(name, password, role); // 构造一个具体的用户类
+        if (user == null)
             return false;
-        }
         users.put(name, user);
         return true;
     }
