@@ -1,5 +1,7 @@
 package com.zouht.oopmt;
 
+import java.io.*;
+import java.sql.Timestamp;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -44,10 +46,36 @@ public class Operator extends User {
     }
 
     public void uploadFile() {
-        String menu_str = """
-                ========上传文件========
-                WIP
-                """;
-        System.out.println(menu_str);
+        System.out.println("========上传文件========");
+        Scanner sc = new Scanner(System.in);
+        System.out.print("输入文件ID: ");
+        String ID = sc.next();
+        System.out.print("输入文件路径: ");
+        String dir = sc.next();
+        System.out.print("输入文件描述: ");
+        String description = sc.next();
+
+        byte[] buffer = new byte[1024];
+        File temp_file = new File(dir);
+        String filename = temp_file.getName();
+        if (!DataProcessing.addDocument(ID, filename, getName(), new Timestamp(System.currentTimeMillis()), description)) {
+            System.out.println("上传失败：文件ID重复");
+            return;
+        }
+        try {
+            BufferedInputStream infile = new BufferedInputStream(new FileInputStream(temp_file));
+            BufferedOutputStream targetfile = new BufferedOutputStream(new FileOutputStream(upload_path + filename));
+            while (true) {
+                int byteRead = infile.read(buffer);
+                if (byteRead == -1) break;
+                targetfile.write(buffer, 0, byteRead);
+            }
+            infile.close();
+            targetfile.close();
+        } catch (IOException e) {
+            System.out.println("上传失败");
+            return;
+        }
+        System.out.println("上传成功");
     }
 }
