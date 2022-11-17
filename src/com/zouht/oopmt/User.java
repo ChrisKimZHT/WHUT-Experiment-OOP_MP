@@ -1,5 +1,7 @@
 package com.zouht.oopmt;
 
+import java.io.*;
+import java.util.Enumeration;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -7,6 +9,9 @@ public abstract class User {
     private String name;
     private String password;
     private String role;
+
+    String upload_path = ".\\upload\\";
+    String download_path = ".\\download\\";
 
     User(String name, String password, String role) {
         this.name = name;
@@ -41,19 +46,44 @@ public abstract class User {
     }
 
     public void showFileList() {
-        String menu_str = """
-                ========文件列表========
-                WIP
-                """;
-        System.out.println(menu_str);
+        System.out.println("========文件列表========");
+        Enumeration<Document> all_docs = DataProcessing.getAllDocument();
+        Document temp;
+        System.out.printf("%5s%20s%30s%15s\n", "ID", "FileName", "Description", "Creator");
+        while (all_docs.hasMoreElements()) {
+            temp = all_docs.nextElement();
+            System.out.printf("%5s%20s%30s%15s\n", temp.getID(), temp.getFilename(), temp.getDescription(), temp.getCreator());
+        }
     }
 
     public void downloadFile() {
-        String menu_str = """
-                ========下载文件========
-                WIP
-                """;
-        System.out.println(menu_str);
+        System.out.println("========下载文件========");
+        System.out.print("输入文件ID: ");
+        Scanner sc = new Scanner(System.in);
+        String ID = sc.next();
+        byte[] buffer = new byte[1024];
+        Document doc = DataProcessing.searchDocument(ID);
+        if (doc == null) {
+            System.out.println("下载失败：未找到该文件");
+            return;
+        }
+        File temp_file = new File(upload_path + doc.getFilename());
+        String file_name = temp_file.getName();
+        try {
+            BufferedInputStream infile = new BufferedInputStream(new FileInputStream(temp_file));
+            BufferedOutputStream targetfile = new BufferedOutputStream(new FileOutputStream(download_path + file_name));
+            while (true) {
+                int byteRead = infile.read(buffer);
+                if (byteRead == -1) break;
+                targetfile.write(buffer, 0, byteRead);
+            }
+            infile.close();
+            targetfile.close();
+        } catch (IOException e) {
+            System.out.println("下载失败");
+            return;
+        }
+        System.out.println("下载成功");
     }
 
     public void changeSelfPassword() {

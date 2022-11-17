@@ -1,5 +1,7 @@
 .idea
 *.iml
+upload
+download
 
 ### Java template
 # Compiled class file
