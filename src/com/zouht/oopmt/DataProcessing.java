@@ -1,16 +1,21 @@
 package com.zouht.oopmt;
 
+import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
 public class DataProcessing {
     static Hashtable<String, User> users;
+    static Hashtable<String, Document> docs;
 
     static {
         users = new Hashtable<String, User>();
         users.put("jack", new Operator("jack", "123", "operator"));
         users.put("rose", new Browser("rose", "123", "browser"));
         users.put("kate", new Admin("kate", "123", "admin"));
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        docs = new Hashtable<String, Document>();
+        docs.put("001", new Document("001", "TestDoc.txt", "jack", timestamp, "test document for dev"));
     }
 
     private static User constructUser(String name, String password, String role) {
@@ -29,11 +34,9 @@ public class DataProcessing {
 
     // 增加用户
     public static boolean addUser(String name, String password, String role) {
-        if (users.containsKey(name))
-            return false;
+        if (users.containsKey(name)) return false;
         User user = constructUser(name, password, role); // 构造一个具体的用户类
-        if (user == null)
-            return false;
+        if (user == null) return false;
         users.put(name, user);
         return true;
     }
@@ -49,11 +52,9 @@ public class DataProcessing {
 
     // 修改用户数据
     public static boolean updateUser(String name, String password, String role) {
-        if (!users.containsKey(name))
-            return false;
+        if (!users.containsKey(name)) return false;
         User user = constructUser(name, password, role); // 构造一个具体的用户类
-        if (user == null)
-            return false;
+        if (user == null) return false;
         users.put(name, user);
         return true;
     }
@@ -78,5 +79,24 @@ public class DataProcessing {
     // 取得所有用户数据
     public static Enumeration<User> getAllUser() {
         return users.elements();
+    }
+
+    // 增加文档
+    public static boolean addDocument(String ID, String filename, String creator, Timestamp timestamp, String description) {
+        if (docs.containsKey(ID)) return false;
+        Document doc = new Document(ID, filename, creator, timestamp, description);
+        docs.put(ID, doc);
+        return true;
+    }
+
+    // 根据ID取得文档
+    public static Document searchDocument(String ID) {
+        if (docs.containsKey(ID)) return docs.get((ID));
+        return null;
+    }
+
+    // 取得所有文档数据
+    public static Enumeration<Document> getAllDocument() {
+        return docs.elements();
     }
 }
