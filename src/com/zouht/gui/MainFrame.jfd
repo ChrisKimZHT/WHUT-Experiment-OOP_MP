@@ -83,6 +83,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "changeSelfPassword"
 						"text": "修改密码"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "changeSelfPasswordAction", false ) )
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "logout"

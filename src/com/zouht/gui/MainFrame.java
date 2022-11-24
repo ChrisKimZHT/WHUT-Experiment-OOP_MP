@@ -16,7 +16,10 @@ import com.zouht.common.*;
  * @author unknown
  */
 public class MainFrame extends JFrame {
+    private final User user;
+
     public MainFrame(User user) {
+        this.user = user;
         initComponents();
         accountInfo.setText(user.getName());
         roleInfo.setText(user.getRole());
@@ -54,6 +57,15 @@ public class MainFrame extends JFrame {
         try {
             JFrame fileList = new FileList();
             fileList.setVisible(true);
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+    }
+
+    private void changeSelfPasswordAction() {
+        try {
+            JFrame changePassword = new ChangePassword(user.getName(), user.getRole());
+            changePassword.setVisible(true);
         } catch (Exception err) {
             err.printStackTrace();
         }
@@ -138,6 +150,7 @@ public class MainFrame extends JFrame {
 
                 //---- changeSelfPassword ----
                 changeSelfPassword.setText("\u4fee\u6539\u5bc6\u7801");
+                changeSelfPassword.addActionListener(e -> changeSelfPasswordAction());
                 menu3.add(changeSelfPassword);
 
                 //---- logout ----
