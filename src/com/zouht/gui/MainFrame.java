@@ -80,6 +80,15 @@ public class MainFrame extends JFrame {
         }
     }
 
+    private void uploadFileAction() {
+        try {
+            JFrame uploadFile = new UploadFile(user.getName());
+            uploadFile.setVisible(true);
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         menuBar1 = new JMenuBar();
@@ -145,6 +154,7 @@ public class MainFrame extends JFrame {
 
                 //---- uploadFile ----
                 uploadFile.setText("\u4e0a\u4f20\u6863\u6848");
+                uploadFile.addActionListener(e -> uploadFileAction());
                 menu2.add(uploadFile);
 
                 //---- downloadFile ----
