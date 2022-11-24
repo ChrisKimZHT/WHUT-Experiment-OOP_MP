@@ -1,6 +1,5 @@
-package com.zouht.oopmt;
+package com.zouht.common;
 
-import java.security.PublicKey;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 

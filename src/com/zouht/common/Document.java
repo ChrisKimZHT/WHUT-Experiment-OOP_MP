@@ -1,4 +1,4 @@
-package com.zouht.oopmt;
+package com.zouht.common;
 
 import java.sql.Timestamp;
 

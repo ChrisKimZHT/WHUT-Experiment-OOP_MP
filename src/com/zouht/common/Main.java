@@ -1,6 +1,5 @@
-package com.zouht.oopmt;
+package com.zouht.common;
 
-import javax.accessibility.AccessibleContext;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
