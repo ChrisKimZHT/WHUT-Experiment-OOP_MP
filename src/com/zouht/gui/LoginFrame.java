@@ -27,7 +27,7 @@ public class LoginFrame extends JFrame {
             infoLable.setText("密码错误，请重试");
         } else {
             infoLable.setText("登录成功");
-            this.setVisible(false);
+            this.dispose();
             try {
                 JFrame mainFrame = new MainFrame(user);
                 mainFrame.setVisible(true);
