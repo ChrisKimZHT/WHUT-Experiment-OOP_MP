@@ -6,6 +6,7 @@ package com.zouht.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Objects;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -19,6 +20,20 @@ public class MainFrame extends JFrame {
         initComponents();
         accountInfo.setText(user.getName());
         roleInfo.setText(user.getRole());
+        if (Objects.equals(user.getRole(), "browser")) {
+            menu1.setEnabled(false);
+            addUser.setEnabled(false);
+            deleteUser.setEnabled(false);
+            changeUserInfo.setEnabled(false);
+            queryUser.setEnabled(false);
+            uploadFile.setEnabled(false);
+        } else if (Objects.equals(user.getRole(), "operator")) {
+            menu1.setEnabled(false);
+            addUser.setEnabled(false);
+            deleteUser.setEnabled(false);
+            changeUserInfo.setEnabled(false);
+            queryUser.setEnabled(false);
+        }
     }
 
     private void exitSystemAction(ActionEvent e) {
@@ -30,6 +45,15 @@ public class MainFrame extends JFrame {
         try {
             JFrame loginFrame = new LoginFrame();
             loginFrame.setVisible(true);
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+    }
+
+    private void showFileListAction() {
+        try {
+            JFrame fileList = new FileList();
+            fileList.setVisible(true);
         } catch (Exception err) {
             err.printStackTrace();
         }
@@ -95,6 +119,7 @@ public class MainFrame extends JFrame {
 
                 //---- showFileList ----
                 showFileList.setText("\u6863\u6848\u5217\u8868");
+                showFileList.addActionListener(e -> showFileListAction());
                 menu2.add(showFileList);
 
                 //---- uploadFile ----
@@ -149,35 +174,35 @@ public class MainFrame extends JFrame {
                 GroupLayout contentPanelLayout = new GroupLayout(contentPanel);
                 contentPanel.setLayout(contentPanelLayout);
                 contentPanelLayout.setHorizontalGroup(
-                    contentPanelLayout.createParallelGroup()
-                        .addGroup(contentPanelLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                .addComponent(helloLable)
+                        contentPanelLayout.createParallelGroup()
                                 .addGroup(contentPanelLayout.createSequentialGroup()
-                                    .addComponent(account)
-                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(accountInfo, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE))
-                                .addGroup(contentPanelLayout.createSequentialGroup()
-                                    .addComponent(role)
-                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(roleInfo, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)))
-                            .addContainerGap(418, Short.MAX_VALUE))
+                                        .addContainerGap()
+                                        .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(helloLable)
+                                                .addGroup(contentPanelLayout.createSequentialGroup()
+                                                        .addComponent(account)
+                                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(accountInfo, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(contentPanelLayout.createSequentialGroup()
+                                                        .addComponent(role)
+                                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(roleInfo, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)))
+                                        .addContainerGap(418, Short.MAX_VALUE))
                 );
                 contentPanelLayout.setVerticalGroup(
-                    contentPanelLayout.createParallelGroup()
-                        .addGroup(contentPanelLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(helloLable)
-                            .addGap(18, 18, 18)
-                            .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(account)
-                                .addComponent(accountInfo))
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(role)
-                                .addComponent(roleInfo))
-                            .addContainerGap(272, Short.MAX_VALUE))
+                        contentPanelLayout.createParallelGroup()
+                                .addGroup(contentPanelLayout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(helloLable)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                .addComponent(account)
+                                                .addComponent(accountInfo))
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                .addComponent(role)
+                                                .addComponent(roleInfo))
+                                        .addContainerGap(272, Short.MAX_VALUE))
                 );
             }
             dialogPane.add(contentPanel, BorderLayout.CENTER);

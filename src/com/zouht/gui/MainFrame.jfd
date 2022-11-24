@@ -66,6 +66,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "showFileList"
 						"text": "档案列表"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "showFileListAction", false ) )
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "uploadFile"
