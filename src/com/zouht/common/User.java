@@ -60,7 +60,7 @@ public abstract class User {
         System.out.println("========下载文件========");
         System.out.print("输入文件ID: ");
         Scanner sc = new Scanner(System.in);
-        String ID = sc.next();
+        int ID = sc.nextInt();
         byte[] buffer = new byte[1024];
         Document doc = DataProcessing.searchDocument(ID);
         if (doc == null) {

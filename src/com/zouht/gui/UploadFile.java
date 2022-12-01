@@ -26,15 +26,13 @@ public class UploadFile extends JFrame {
     }
 
     private void StartAction() {
-        String ID = IdInput.getText();
         String dir = DirInput.getText();
         String description = DiscriptionInput.getText();
 
         byte[] buffer = new byte[1024];
         File temp_file = new File(dir);
         String filename = temp_file.getName();
-        if (!DataProcessing.addDocument(ID, filename, name, new Timestamp(System.currentTimeMillis()), description)) {
-            WarningLable.setText("上传失败：文件ID重复");
+        if (!DataProcessing.addDocument(filename, name, new Timestamp(System.currentTimeMillis()), description)) {
             return;
         }
         try {

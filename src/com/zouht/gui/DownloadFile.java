@@ -24,7 +24,7 @@ public class DownloadFile extends JFrame {
     }
 
     private void StartAction() {
-        String ID = IdInput.getText();
+        int ID = Integer.parseInt(IdInput.getText());
         byte[] buffer = new byte[1024];
         Document doc = DataProcessing.searchDocument(ID);
         if (doc == null) {

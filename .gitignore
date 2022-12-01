@@ -2,6 +2,7 @@
 *.iml
 upload
 download
+database.properties
 
 ### Java template
 # Compiled class file
