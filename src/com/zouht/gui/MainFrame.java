@@ -89,6 +89,24 @@ public class MainFrame extends JFrame {
         }
     }
 
+    private void addUserAction() {
+        try {
+            JFrame uploadFile = new CreateUser();
+            uploadFile.setVisible(true);
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+    }
+
+    private void changeUserInfoAction() {
+        try {
+            JFrame uploadFile = new EditUser(user.getName());
+            uploadFile.setVisible(true);
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         menuBar1 = new JMenuBar();
@@ -127,6 +145,7 @@ public class MainFrame extends JFrame {
 
                 //---- addUser ----
                 addUser.setText("\u65b0\u589e\u7528\u6237");
+                addUser.addActionListener(e -> addUserAction());
                 menu1.add(addUser);
 
                 //---- deleteUser ----
@@ -135,6 +154,7 @@ public class MainFrame extends JFrame {
 
                 //---- changeUserInfo ----
                 changeUserInfo.setText("\u4fee\u6539\u7528\u6237");
+                changeUserInfo.addActionListener(e -> changeUserInfoAction());
                 menu1.add(changeUserInfo);
 
                 //---- queryUser ----
