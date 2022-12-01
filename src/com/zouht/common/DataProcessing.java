@@ -53,7 +53,7 @@ public class DataProcessing {
         // 查询用户是否已经存在
         try {
             getConnection();
-            String sql = "SELECT * from user WHERE name=" + name;
+            String sql = "SELECT * from user WHERE name='" + name + "'";
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
             int cnt = 0;
@@ -69,7 +69,8 @@ public class DataProcessing {
         // 插入用户
         try {
             getConnection();
-            String sql = "INSERT INTO user (" + name + ", " + password + ", " + role + ")";
+            String sql = "INSERT INTO user (name, password, role) VALUES " +
+                    "('" + name + "', '" + password + "', '" + role + "')";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.executeQuery();
             return true;
@@ -83,7 +84,7 @@ public class DataProcessing {
     public static boolean deleteUser(String name) {
         try {
             getConnection();
-            String sql = "DELETE FROM user WHERE name=" + name;
+            String sql = "DELETE FROM user WHERE name='" + name + "'";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.executeQuery();
             return true;
@@ -98,7 +99,7 @@ public class DataProcessing {
         // 查询用户是否已经存在
         try {
             getConnection();
-            String sql = "SELECT * from user WHERE name=" + name;
+            String sql = "SELECT * from user WHERE name='" + name + "'";
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
             int cnt = 0;
@@ -113,9 +114,9 @@ public class DataProcessing {
         // 修改数据
         try {
             getConnection();
-            String sql = "UPDATE user SET password=" + password + ",role = " + role + " WHERE name=" + name;
+            String sql = "UPDATE user SET password='" + password + "',role = '" + role + "' WHERE name='" + name + "'";
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -141,9 +142,10 @@ public class DataProcessing {
     public static User searchUser(String name) {
         try {
             getConnection();
-            String sql = "SELECT * from user WHERE name=" + name;
+            String sql = "SELECT * from user WHERE name='" + name + "'";
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
+            resultSet.next();
             String password = resultSet.getString("password");
             String role = resultSet.getString("role");
             return constructUser(name, password, role);
@@ -157,9 +159,10 @@ public class DataProcessing {
     public static User checkPassword(String name, String pwd) {
         try {
             getConnection();
-            String sql = "SELECT * from user WHERE name=" + name;
+            String sql = "SELECT * from user WHERE name='" + name + "'";
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
+            resultSet.next();
             String password = resultSet.getString("password");
             String role = resultSet.getString("role");
             if (pwd.equals(password))
@@ -197,9 +200,10 @@ public class DataProcessing {
     public static boolean addDocument(String filename, String creator, Timestamp timestamp, String description) {
         try {
             getConnection();
-            String sql = "INSERT INTO file (" + filename + ", " + creator + ", " + timestamp + ", " + description + ")";
+            String sql = "INSERT INTO file (filename, creator, timestamp, description) " +
+                    "VALUES ('" + filename + "', '" + creator + "', '" + timestamp + "', '" + description + "')";
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -211,9 +215,10 @@ public class DataProcessing {
     public static Document searchDocument(int ID) {
         try {
             getConnection();
-            String sql = "SELECT * from file WHERE id=" + ID;
+            String sql = "SELECT * from file WHERE id='" + ID + "'";
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
+            resultSet.next();
             String filename = resultSet.getString("filename");
             String creator = resultSet.getString("creator");
             Timestamp timestamp = resultSet.getTimestamp("timestamp");
