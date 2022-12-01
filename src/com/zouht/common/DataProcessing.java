@@ -72,7 +72,7 @@ public class DataProcessing {
             String sql = "INSERT INTO user (name, password, role) VALUES " +
                     "('" + name + "', '" + password + "', '" + role + "')";
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
