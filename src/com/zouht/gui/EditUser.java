@@ -5,7 +5,6 @@
 package com.zouht.gui;
 
 import com.zouht.common.DataProcessing;
-import com.zouht.common.User;
 
 import javax.swing.*;
 import javax.swing.GroupLayout;
@@ -14,7 +13,7 @@ import javax.swing.GroupLayout;
  * @author unknown
  */
 public class EditUser extends JFrame {
-    public EditUser(String name) {
+    public EditUser() {
         initComponents();
     }
 

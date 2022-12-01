@@ -86,7 +86,7 @@ public class DataProcessing {
             getConnection();
             String sql = "DELETE FROM user WHERE name='" + name + "'";
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
