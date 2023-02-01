@@ -3,56 +3,63 @@ package com.zouht.common;
 import java.net.*;
 import java.io.*;
 
-
 public class Server {
-    private final ServerSocket serverSocket;
-    private int threatCount = 1;
+    private static ServerSocket server;
+    private static ObjectOutputStream output;
+    private static ObjectInputStream input;
+    private static Socket connection;
 
-    public Server() throws IOException {
-        serverSocket = new ServerSocket(12233);
-        try {
-            while (true) {
-                Socket socket = serverSocket.accept();
-                ServerThread serverThread = new ServerThread(socket, threatCount);
-                serverThread.run();
-                threatCount++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            serverSocket.close();
-        }
+    public static void WaitForConnection() throws IOException {
+        System.out.println("[INFO] 开始监听连接\n");
+        connection = server.accept();
+        System.out.println("[INFO] 已建立连接: " + connection.getInetAddress().getHostName());
     }
 
-    class ServerThread extends Thread {
-        private final Socket socket;
+    public static void GetStreams() throws IOException {
+        output = new ObjectOutputStream(connection.getOutputStream());
+        output.flush();
+        input = new ObjectInputStream(connection.getInputStream());
+        System.out.println("[INFO] IO流构造完成\n");
+    }
 
-        public ServerThread(Socket s, int c) throws IOException {
-            socket = s;
-            System.out.println("线程" + c + "启动成功");
-        }
+    public static void ProcessConnection() throws IOException, ClassNotFoundException {
+        String messageFromClient;
+        do {
+            messageFromClient = (String) input.readObject();
+            System.out.println("CLIENT>>> " + messageFromClient);
+            output.writeObject(messageFromClient);
+            output.flush();
+        } while (!messageFromClient.equals("登出"));
+        output.writeObject(messageFromClient);
+        output.flush();
+    }
 
-        public void run() {
-            try {
-                System.out.println("等待客户端连接中，端口号：" + serverSocket.getLocalPort());
-                System.out.println("客户端已连接，地址：" + socket.getRemoteSocketAddress());
-                DataInputStream in = new DataInputStream(socket.getInputStream());
-                System.out.println("收到客户端消息：" + in.readUTF());
-                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-                String send = "我是服务端";
-                System.out.println("发送客户端消息：" + send);
-                out.writeUTF(send);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    public static void CloseConnection() {
+        try {
+            output.close();
+            input.close();
+            connection.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     public static void main(String[] args) {
         try {
-            new Server();
+            server = new ServerSocket(8888);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        try {
+            while (true) {
+                WaitForConnection();
+                GetStreams();
+                ProcessConnection();
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            CloseConnection();
         }
     }
 }
