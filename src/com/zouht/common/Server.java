@@ -10,7 +10,7 @@ public class Server {
     private static Socket connection;
 
     public static void WaitForConnection() throws IOException {
-        System.out.println("[INFO] 开始监听连接\n");
+        System.out.println("[INFO] 开始监听连接");
         connection = server.accept();
         System.out.println("[INFO] 已建立连接: " + connection.getInetAddress().getHostName());
     }
@@ -19,7 +19,7 @@ public class Server {
         output = new ObjectOutputStream(connection.getOutputStream());
         output.flush();
         input = new ObjectInputStream(connection.getInputStream());
-        System.out.println("[INFO] IO流构造完成\n");
+        System.out.println("[INFO] IO流构造完成");
     }
 
     public static void ProcessConnection() throws IOException, ClassNotFoundException {
@@ -29,7 +29,7 @@ public class Server {
             System.out.println("CLIENT>>> " + messageFromClient);
             output.writeObject(messageFromClient);
             output.flush();
-        } while (!messageFromClient.equals("登出"));
+        } while (!messageFromClient.startsWith("LOGOUT"));
         output.writeObject(messageFromClient);
         output.flush();
     }
@@ -56,7 +56,7 @@ public class Server {
                 GetStreams();
                 ProcessConnection();
             }
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             CloseConnection();

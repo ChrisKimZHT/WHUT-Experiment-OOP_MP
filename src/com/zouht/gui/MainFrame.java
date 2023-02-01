@@ -46,6 +46,7 @@ public class MainFrame extends JFrame {
     private void logoutAction(ActionEvent e) {
         this.dispose();
         try {
+            Client.SendMessage("LOGOUT: " + user.getName());
             JFrame loginFrame = new LoginFrame();
             loginFrame.setVisible(true);
         } catch (Exception err) {
