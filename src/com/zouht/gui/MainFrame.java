@@ -40,6 +40,11 @@ public class MainFrame extends JFrame {
     }
 
     private void exitSystemAction(ActionEvent e) {
+        try {
+            Client.SendMessage("LOGOUT: " + user.getName());
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
         System.exit(0);
     }
 
